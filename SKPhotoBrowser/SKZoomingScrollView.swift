@@ -9,8 +9,8 @@
 import UIKit
 
 open class SKZoomingScrollView: UIScrollView {
-    var captionView: SKCaptionView!
-    var photo: SKPhotoProtocol! {
+    open var captionView: SKCaptionView!
+    open var photo: SKPhotoProtocol! {
         didSet {
             imageView.image = nil
             if photo != nil && photo.underlyingImage != nil {

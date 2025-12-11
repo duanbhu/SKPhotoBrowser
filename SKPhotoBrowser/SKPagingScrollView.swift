@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SKPagingScrollView: UIScrollView {
+open class SKPagingScrollView: UIScrollView {
     fileprivate let pageIndexTagOffset: Int = 1000
     fileprivate let sideMargin: CGFloat = 10
     fileprivate var visiblePages: [SKZoomingScrollView] = []
@@ -19,11 +19,11 @@ class SKPagingScrollView: UIScrollView {
         return browser?.photos.count ?? 0
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
