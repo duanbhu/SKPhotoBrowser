@@ -111,7 +111,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     func frameForToolbarAtOrientation() -> CGRect {
         let offset: CGFloat = {
             if #available(iOS 11.0, *) {
-                return contentView.safeAreaInsets.bottom
+                return self.safeAreaInsets.bottom
             } else {
                 return 15
             }
@@ -124,7 +124,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
                 return 44
             }
         }()
-        return CGRect(x: 0, y: contentView.bounds.height - 100, width: contentView.bounds.width, height: height)
+        return CGRect(x: 0, y: contentView.bounds.height - offset - height, width: contentView.bounds.width, height: height)
     }
 }
 

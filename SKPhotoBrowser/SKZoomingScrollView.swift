@@ -293,6 +293,7 @@ extension SKZoomingScrollView: SKDetectingViewDelegate {
 extension SKZoomingScrollView: SKDetectingImageViewDelegate {
     func handleImageViewSingleTap(_ touchPoint: CGPoint) {
         guard let browser = browser else {
+            NotificationCenter.default.post(name: .sKZoomingScrollViewSingleTap, object: nil)
             return
         }
         if SKPhotoBrowserOptions.enableSingleTapDismiss {
