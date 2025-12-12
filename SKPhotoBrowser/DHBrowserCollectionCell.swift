@@ -38,8 +38,8 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     
     private var currentPageIndex: Int = 0
     
-    private let paginationView: SKPaginationView = {
-        let paginationView = SKPaginationView(frame: .zero, browser: nil)
+    private lazy var paginationView: SKPaginationView = {
+        let paginationView = SKPaginationView(frame: contentView.bounds, browser: nil)
         return paginationView
     }()
     
@@ -64,6 +64,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
         contentView.backgroundColor = .black
         contentView.addSubview(collectionView)
         contentView.addSubview(paginationView)
+        contentView.addSubview(toolbar)
        
         collectionView.frame = contentView.bounds
         paginationView.frame = CGRect(x: 0, y: contentView.bounds.height - 100, width: contentView.bounds.width, height: 100)
