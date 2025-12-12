@@ -32,10 +32,15 @@ class SKPaginationView: UIView {
 
         setupApperance()
         setupCounterLabel()
+        
+        guard let browser = browser else {
+            setupViews()
+            return
+        }
+        
         setupPrevButton()
         setupNextButton()
-        
-        update(browser?.currentPageIndex ?? 0)
+        update(browser.currentPageIndex)
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -68,6 +73,18 @@ class SKPaginationView: UIView {
         guard let prevButton = prevButton, let nextButton = nextButton else { return }
         prevButton.isEnabled = (currentPageIndex > 0)
         nextButton.isEnabled = (currentPageIndex < browser.photos.count - 1)
+    }
+    
+    func update(_ currentPageIndex: Int, photosCount: Int) {
+        self.isHidden = photosCount <= 1
+        if photosCount > 1 {
+            counterLabel?.text = "\(currentPageIndex + 1) / \(photosCount)"
+        } else {
+            counterLabel?.text = nil
+        }
+        guard let prevButton = prevButton, let nextButton = nextButton else { return }
+        prevButton.isEnabled = (currentPageIndex > 0)
+        nextButton.isEnabled = (currentPageIndex < photosCount - 1)
     }
     
     func setControlsHidden(hidden: Bool) {
@@ -125,6 +142,18 @@ private extension SKPaginationView {
         button.addTarget(browser, action: #selector(SKPhotoBrowser.gotoNextPage), for: .touchUpInside)
         addSubview(button)
         nextButton = button
+    }
+    
+    func setupViews() {
+        let button = SKPrevButton(frame: frame)
+        button.center = CGPoint(x: frame.width / 2 - 100, y: frame.height / 2)
+        addSubview(button)
+        prevButton = button
+        
+        let button2 = SKNextButton(frame: frame)
+        button2.center = CGPoint(x: frame.width / 2 + 100, y: frame.height / 2)
+        addSubview(button2)
+        nextButton = button2
     }
 }
 
