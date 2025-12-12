@@ -266,7 +266,7 @@ extension SKZoomingScrollView: UIScrollViewDelegate {
 extension SKZoomingScrollView: SKDetectingViewDelegate {
     func handleSingleTap(_ view: UIView, touch: UITouch) {
         guard let browser = browser else {
-            
+            NotificationCenter.default.post(name: .sKZoomingScrollViewSingleTap, object: nil)
             return
         }
         guard SKPhotoBrowserOptions.enableZoomBlackArea == true else {

@@ -8,6 +8,12 @@
 
 import UIKit
 
+public extension Notification.Name {
+    static let sKZoomingScrollViewSingleTap = Notification.Name("sKZoomingScrollViewSingleTap")
+    
+    static let skToolbarToolAction = Notification.Name("skToolbarToolAction")
+}
+
 open class DHBrowserCollectionCell: UICollectionViewCell {
     
     // MARK: - Properties
@@ -91,7 +97,8 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     }
     
     @objc func actionButtonPressed(ignoreAndShare: Bool) {
-        
+        let photo = photos[currentPageIndex]
+        NotificationCenter.default.post(name: .skToolbarToolAction, object: nil, userInfo: ["photo": photo])
     }
     
     open override func layoutSubviews() {
@@ -117,8 +124,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
                 return 44
             }
         }()
-        
-        return contentView.bounds.divided(atDistance: height, from: .maxYEdge).slice.offsetBy(dx: 0, dy: -offset)
+        return CGRect(x: 0, y: contentView.bounds.height - 100, width: contentView.bounds.width, height: height)
     }
 }
 

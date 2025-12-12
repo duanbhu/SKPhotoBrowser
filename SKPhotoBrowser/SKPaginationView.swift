@@ -76,12 +76,7 @@ class SKPaginationView: UIView {
     }
     
     func update(_ currentPageIndex: Int, photosCount: Int) {
-        self.isHidden = photosCount <= 1
-        if photosCount > 1 {
-            counterLabel?.text = "\(currentPageIndex + 1) / \(photosCount)"
-        } else {
-            counterLabel?.text = nil
-        }
+        counterLabel?.text = "\(currentPageIndex + 1) / \(photosCount)"
         guard let prevButton = prevButton, let nextButton = nextButton else { return }
         prevButton.isEnabled = (currentPageIndex > 0)
         nextButton.isEnabled = (currentPageIndex < photosCount - 1)
