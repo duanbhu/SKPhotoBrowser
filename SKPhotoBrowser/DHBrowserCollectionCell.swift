@@ -33,7 +33,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     }
     
     // 确保使用我们之前讨论过的 DHPhotoCollectionView
-    private lazy var collectionView: DHPhotoCollectionView = {
+     internal private(set) lazy var collectionView: DHPhotoCollectionView = {
         // 使用 bounds 作为 frame
         let view = DHPhotoCollectionView(frame: contentView.bounds)
         view.customLayout?.scrollDirection = .vertical
@@ -45,12 +45,12 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     
     private var currentPageIndex: Int = 0
     
-    private lazy var paginationView: SKPaginationView = {
+    internal private(set) lazy var paginationView: SKPaginationView = {
         let paginationView = SKPaginationView(frame: contentView.bounds, browser: nil)
         return paginationView
     }()
     
-    private lazy var toolbar: SKToolbar = {
+    internal private(set) lazy var toolbar: SKToolbar = {
         let toolbar = SKToolbar(frame: .zero)
         return toolbar
     }()
@@ -109,7 +109,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
         toolbar.frame = frameForToolbarAtOrientation()
     }
     
-    func frameForToolbarAtOrientation() -> CGRect {
+    open func frameForToolbarAtOrientation() -> CGRect {
         let offset: CGFloat = {
             if #available(iOS 11.0, *) {
                 return self.safeAreaInsets.bottom
