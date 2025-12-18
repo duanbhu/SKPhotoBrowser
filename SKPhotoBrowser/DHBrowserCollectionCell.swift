@@ -47,6 +47,8 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     
     internal private(set) lazy var paginationView: SKPaginationView = {
         let paginationView = SKPaginationView(frame: contentView.bounds, browser: nil)
+        paginationView.prevButton?.isHidden = true
+        paginationView.nextButton?.isHidden = true
         return paginationView
     }()
     

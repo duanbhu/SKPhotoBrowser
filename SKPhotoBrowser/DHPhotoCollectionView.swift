@@ -49,18 +49,27 @@ class DHPhotoCollectionView: UICollectionView {
         }
     }
     
-    /// 获取当前位于中心位置的 Cell
+    /// 获取当前位于中心位置的 Cell（支持横向 / 纵向滚动）
     var centerCell: UICollectionViewCell? {
         let visibleCells = self.visibleCells
         guard !visibleCells.isEmpty else { return nil }
-        
-        let centerX = contentOffset.x + (bounds.width / 2.0)
-        
-        // 找到距离中心最近的 Cell
-        return visibleCells.min { cell1, cell2 in
-            let distance1 = abs(cell1.center.x - centerX)
-            let distance2 = abs(cell2.center.x - centerX)
-            return distance1 < distance2
+
+        let isVertical = customLayout?.scrollDirection == .vertical
+
+        if isVertical {
+            let centerY = contentOffset.y + bounds.height * 0.5
+            return visibleCells.min { cell1, cell2 in
+                let distance1 = abs(cell1.center.y - centerY)
+                let distance2 = abs(cell2.center.y - centerY)
+                return distance1 < distance2
+            }
+        } else {
+            let centerX = contentOffset.x + bounds.width * 0.5
+            return visibleCells.min { cell1, cell2 in
+                let distance1 = abs(cell1.center.x - centerX)
+                let distance2 = abs(cell2.center.x - centerX)
+                return distance1 < distance2
+            }
         }
     }
     
@@ -68,18 +77,41 @@ class DHPhotoCollectionView: UICollectionView {
     /// - Parameter page: 页面索引（从0开始）
     func scrollToPage(_ page: Int, animated: Bool = false) {
         let spacing = customLayout?.minimumLineSpacing ?? 0
-        let pageWidth = bounds.width + spacing
-        let offsetX = pageWidth * CGFloat(page)
-        setContentOffset(CGPoint(x: offsetX, y: 0), animated: animated)
+
+        switch customLayout?.scrollDirection {
+        case .vertical:
+            let pageHeight = bounds.height + spacing
+            let offsetY = pageHeight * CGFloat(page)
+            setContentOffset(CGPoint(x: 0, y: offsetY), animated: animated)
+
+        case .horizontal:
+            let pageWidth = bounds.width + spacing
+            let offsetX = pageWidth * CGFloat(page)
+            setContentOffset(CGPoint(x: offsetX, y: 0), animated: animated)
+
+        default:
+            break
+        }
     }
     
     /// 获取当前页面索引
     var currentPage: Int {
-        guard bounds.width > 0 else { return 0 }
-        let spacing = customLayout?.minimumLineSpacing ?? 0
-        let pageWidth = bounds.width + spacing
-        let page = Int((contentOffset.x + pageWidth * 0.5) / pageWidth)
-        return max(0, page)
+        switch customLayout?.scrollDirection {
+        case .vertical:
+            guard bounds.height > 0 else { return 0 }
+            let spacing = customLayout?.minimumLineSpacing ?? 0
+            let pageHeight = bounds.height + spacing
+            let page = Int((contentOffset.y + pageHeight * 0.5) / pageHeight)
+            return max(0, page)
+        case .horizontal:
+            guard bounds.width > 0 else { return 0 }
+            let spacing = customLayout?.minimumLineSpacing ?? 0
+            let pageWidth = bounds.width + spacing
+            let page = Int((contentOffset.x + pageWidth * 0.5) / pageWidth)
+            return max(0, page)
+        case _:
+            return 0
+        }
     }
     
     // MARK: - Hit Test
@@ -124,4 +156,3 @@ class DHPhotoCollectionView: UICollectionView {
         scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
     }
 }
-
