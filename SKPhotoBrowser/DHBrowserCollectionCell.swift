@@ -36,6 +36,7 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
     private lazy var collectionView: DHPhotoCollectionView = {
         // 使用 bounds 作为 frame
         let view = DHPhotoCollectionView(frame: contentView.bounds)
+        view.customLayout?.scrollDirection = .vertical
         view.register(DHPhotoCollectionCell.self, forCellWithReuseIdentifier: "DHPhotoCollectionCell")
         view.delegate = self
         view.dataSource = self
