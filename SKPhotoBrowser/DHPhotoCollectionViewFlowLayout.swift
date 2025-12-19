@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DHPhotoCollectionViewFlowLayout: UICollectionViewFlowLayout {
+public class DHPhotoCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         commonInit()
@@ -25,7 +25,7 @@ class DHPhotoCollectionViewFlowLayout: UICollectionViewFlowLayout {
         scrollDirection = .horizontal
     }
     
-    override func prepare() {
+    public override func prepare() {
         super.prepare()
         
         guard let collectionView = collectionView else { return }

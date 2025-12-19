@@ -11,7 +11,7 @@ open class DHPhotoCollectionView: UICollectionView {
     // MARK: - Properties
     
     /// 自定义布局
-    internal private(set) var customLayout: DHPhotoCollectionViewFlowLayout?
+    public var customLayout: DHPhotoCollectionViewFlowLayout?
     
     // MARK: - Initialization
     
