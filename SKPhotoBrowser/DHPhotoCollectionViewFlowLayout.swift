@@ -7,13 +7,13 @@
 
 import UIKit
 
-public class DHPhotoCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class DHPhotoCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         commonInit()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
