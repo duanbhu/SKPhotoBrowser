@@ -22,13 +22,12 @@ open class DHBrowserCollectionCell: UICollectionViewCell {
             collectionView.reloadData()
             // 确保在数据加载时，如果 record.image_list 为空，不会导致崩溃
             let count = photos.count
-            paginationView.update(currentPageIndex, photosCount: count)
-            
             // 确保从第一页开始显示 (如果需要的话)
             if currentPageIndex != 0 {
                 collectionView.scrollToPage(0, animated: false)
                 currentPageIndex = 0
             }
+            paginationView.update(currentPageIndex, photosCount: count)
         }
     }
     
