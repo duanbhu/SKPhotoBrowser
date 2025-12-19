@@ -7,21 +7,21 @@
 
 import UIKit
 
-class DHPhotoCollectionView: UICollectionView {
+open class DHPhotoCollectionView: UICollectionView {
     // MARK: - Properties
     
     /// 自定义布局
-    private(set) var customLayout: DHPhotoCollectionViewFlowLayout?
+    internal private(set) var customLayout: DHPhotoCollectionViewFlowLayout?
     
     // MARK: - Initialization
     
-    convenience init(frame: CGRect) {
+    public convenience init(frame: CGRect) {
         let layout = DHPhotoCollectionViewFlowLayout()
         self.init(frame: frame, collectionViewLayout: layout)
         self.customLayout = layout
     }
     
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+    public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         commonInit()
         
@@ -31,7 +31,7 @@ class DHPhotoCollectionView: UICollectionView {
         }
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
@@ -50,7 +50,7 @@ class DHPhotoCollectionView: UICollectionView {
     }
     
     /// 获取当前位于中心位置的 Cell（支持横向 / 纵向滚动）
-    var centerCell: UICollectionViewCell? {
+    public var centerCell: UICollectionViewCell? {
         let visibleCells = self.visibleCells
         guard !visibleCells.isEmpty else { return nil }
 
@@ -75,7 +75,7 @@ class DHPhotoCollectionView: UICollectionView {
     
     /// 滚动到指定页面
     /// - Parameter page: 页面索引（从0开始）
-    func scrollToPage(_ page: Int, animated: Bool = false) {
+    public func scrollToPage(_ page: Int, animated: Bool = false) {
         let spacing = customLayout?.minimumLineSpacing ?? 0
 
         switch customLayout?.scrollDirection {
@@ -95,7 +95,7 @@ class DHPhotoCollectionView: UICollectionView {
     }
     
     /// 获取当前页面索引
-    var currentPage: Int {
+    public var currentPage: Int {
         switch customLayout?.scrollDirection {
         case .vertical:
             guard bounds.height > 0 else { return 0 }
@@ -115,7 +115,7 @@ class DHPhotoCollectionView: UICollectionView {
     }
     
     // MARK: - Hit Test
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
         
         // 当点击到 UISlider 时，禁用滚动以避免手势冲突
@@ -129,19 +129,19 @@ class DHPhotoCollectionView: UICollectionView {
     }
     
     // MARK: - 触摸事件处理（可选增强）
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // 触摸开始时，确保滚动可用
         isScrollEnabled = true
         super.touchesBegan(touches, with: event)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // 触摸结束时，恢复滚动状态
         isScrollEnabled = true
         super.touchesEnded(touches, with: event)
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         // 触摸取消时，恢复滚动状态
         isScrollEnabled = true
         super.touchesCancelled(touches, with: event)
@@ -149,7 +149,7 @@ class DHPhotoCollectionView: UICollectionView {
     
     // MARK: - 滚动到中心 Cell（增强功能）
     /// 平滑滚动到最近的 Cell（用于非分页模式下的精确对齐）
-    func scrollToNearestCell(animated: Bool = true) {
+    open func scrollToNearestCell(animated: Bool = true) {
         guard let centerCell = centerCell,
               let indexPath = indexPath(for: centerCell) else { return }
         
